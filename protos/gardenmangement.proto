@@ -1,0 +1,155 @@
+syntax="proto3";
+
+package garden;
+
+option go_package="genproto/gardenmangement";
+
+service GardenService{
+    // Yangi bog' yaratish
+    rpc CreateGarden(CreateGardenRequest) returns (CreateGardenResponse);
+    // Bog'ni yangilash
+    rpc UpdateGarden(UpdateGardenRequest) returns (UpdateGardenResponse);
+    // Bog'  malumotini olish xizmati
+    rpc GetGarden(GetGardenRequest) returns (GetGardenResponse);
+    // Bog'ni o'chirish xizmati
+    rpc DeleteGareden(DeleteGardenRequest) returns (DeleteGardenResponse);
+    // Foydalanuvchining bog'larini ro'yxatlash
+    rpc GetUserGardens(GetUserGardensRequest) returns (GetUserGardensResponse);
+
+
+    // Yangi o'simliklar yaratish
+    rpc CreatePlant(CreatePlantRequest) returns (CreatePlantReponse);
+    // O'simlik malumotlarini olish
+    rpc GetPlant(GetPlantRequest) returns (GetPlantResponse);
+    // O'simlikni yangilash
+    rpc UpdatePlant(UpdatePlantRequest) returns (UpdatePlantResponse);
+    // O'simlikni o'chirish
+    rpc DeletePlant(DeletePlantRequest) returns (DeletePlantResponse);
+
+    // Parvarish loglarini yaratish
+    rpc CreateCareLog(CreateCareLogRequest) returns (CreateCareLogResponse);
+    // Parvarish loglarini ro'yxatlash
+    rpc GetCareLog(GetCareLogRequest) returns (GetCareLogResponse);
+}
+
+// Bog' moduli
+message Garden{
+    string id=1;
+    string user_id=2;
+    string name=3;
+    string type=4;
+    double area_sq=5;
+    string create_at=6;
+    string update_at=7;
+}
+
+// O'simlik moduli
+message Plant{
+    string id=1;
+    string garden_id=2;
+    string species=3;
+    int32  quantity =4;
+    string planting_date=5;
+    string status=6;
+}
+
+// Parvarish kundalik moduli
+message CareLog{
+    string id=1;
+    string plant_id=2;
+    string action=3;
+    string notes =4;
+    string logged_at=5;
+}
+
+message CreateGardenRequest{
+    Garden garden=1;
+}
+
+message CreateGardenResponse{
+    string message = 1;
+    bool success = 2;
+}
+
+message GetGardenRequest{
+    string id=1;
+}
+
+message GetGardenResponse{
+    string user_id=1;
+    string name=2;
+    string type=3;
+    string area_sqm=4;
+}
+
+message UpdateGardenRequest {
+    Garden garden = 1;
+}
+  
+message UpdateGardenResponse {
+    string message = 1;
+}
+
+message DeleteGardenRequest {
+    string id = 1;
+}
+  
+message DeleteGardenResponse {
+    string message=1;
+}
+
+message GetUserGardensRequest {
+    string user_id = 1;
+}
+  
+message GetUserGardensResponse {
+    repeated Garden gardens = 1;
+}
+
+message CreatePlantRequest{
+    Plant plant=1;
+}
+
+message CreatePlantReponse{
+    string message=1;
+}
+
+message GetPlantRequest{
+    string garden_id=1;
+}
+
+message GetPlantResponse{
+    repeated Plant plants=1;
+}
+
+message UpdatePlantRequest{
+    Plant plant=1;
+}
+
+message UpdatePlantResponse{
+    string message=1;
+}
+
+message DeletePlantRequest{
+    string id=1;
+}
+
+message DeletePlantResponse{
+    string message=1;
+}
+
+message CreateCareLogRequest{
+    CareLog care_log=1;
+}
+
+message CreateCareLogResponse{
+    string message=1;
+}
+
+message GetCareLogRequest{
+    string plant_id=1;
+}
+
+message GetCareLogResponse{
+    repeated CareLog care_log=1;
+}
